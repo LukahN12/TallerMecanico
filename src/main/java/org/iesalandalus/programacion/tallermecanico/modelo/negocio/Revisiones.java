@@ -52,11 +52,7 @@ public class Revisiones {
 
     public void insertar(Revision revision) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(revision, "No se puede insertar una revisión nula.");
-        comprobarRevision(revision.getCliente(),revision.getVehiculo(),revision.getFechaFin());
-        if (coleccionRevisiones.contains(revision)){
-            throw new TallerMecanicoExcepcion("Ya existe un vehículo con esa matrícula.");
-        }
-
+        comprobarRevision(revision.getCliente(),revision.getVehiculo(),revision.getFechaInicio());
         coleccionRevisiones.add(revision);
     }
 
@@ -75,12 +71,12 @@ public class Revisiones {
             }
 
             if (revision.estaCerrada()){
-                if (revision.getFechaFin().isAfter(fechaRevision)){
+                if (!fechaRevision.isAfter(revision.getFechaFin())){
                     if (revision.getCliente().equals(cliente)){
-                        throw new TallerMecanicoExcepcion("Cliente hora tamal");
+                        throw new TallerMecanicoExcepcion("El cliente tiene una revisión posterior.");
                     }
                     if (revision.getVehiculo().equals(vehiculo)){
-                        throw new TallerMecanicoExcepcion("Vehiculo hora tamal");
+                        throw new TallerMecanicoExcepcion("El vehículo tiene una revisión posterior.");
                     }
                 }
             }
