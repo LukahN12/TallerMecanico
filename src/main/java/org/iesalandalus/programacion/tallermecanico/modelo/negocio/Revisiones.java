@@ -19,7 +19,7 @@ public class Revisiones {
     }
 
     public List<Revision> get() {
-        return coleccionRevisiones;
+        return new ArrayList<>(coleccionRevisiones);
     }
 
     public List<Revision> get(Cliente cliente) {
