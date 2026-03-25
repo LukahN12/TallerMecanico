@@ -25,7 +25,7 @@ public class Consola {
    }
 
    public static void mostrarMenu(){
-       mostrarCabecera("Gestión de un taller mecanico ");
+       mostrarCabecera("Gestión de un taller mecánico ");
        for (Opcion opcion1 : Opcion.values()){
            System.out.println(opcion1);
        }
@@ -63,14 +63,14 @@ public class Consola {
     public static Opcion elegirOpcion(){
         int opcion;
        do {
-           System.out.print("Que opción quieres elegir?: ");
+           System.out.print("¿Que opción quieres elegir?: ");
           opcion = Entrada.entero();
        } while (!Opcion.esValida(opcion));
        return Opcion.opciones.get(opcion);
     }
 
     public static Cliente leerCliente(){
-        String nombre = leerCadena("Como se llama el cliente? ");
+        String nombre = leerCadena("¿Como se llama el cliente? ");
         String dni = leerCadena("¿Cual es el dni del cliente? ");
         String telefono = leerCadena("¿Cual es el teléfono del cliente? ");
         return new Cliente(nombre,dni,telefono);
@@ -85,7 +85,7 @@ public class Consola {
     }
 
     public static String leerNuevoTelefono(){
-        return leerCadena("¿Que telefono quieres introducir? ");
+        return leerCadena("¿Que teléfono quieres introducir? ");
     }
 
     public static Vehiculo leerVehiculo(){

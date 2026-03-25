@@ -95,6 +95,7 @@ public class Vista {
     private void modificarCliente() throws TallerMecanicoExcepcion {
         Consola.mostrarCabecera("Modificar un cliente");
         controlador.modificarCliente(Consola.leerClienteDni(),Consola.leerNuevoNombre(),Consola.leerNuevoTelefono());
+        System.out.println("Se ha modificado el cliente correctamente.");
     }
 
     private void anadirHoras() throws TallerMecanicoExcepcion {
@@ -183,7 +184,7 @@ public class Vista {
 
     private void listarRevisionesVehiculo(){
         Consola.mostrarCabecera("Lista de revisiones en base a los vehículos");
-        List<Revision> revisiones = controlador.listarRevisionesCliente(Consola.leerCliente());
+        List<Revision> revisiones = controlador.listarRevisionesVehiculo(Consola.leerVehiculo());
         if (revisiones.isEmpty()){
             System.out.println("No hay revisiones adecuadas todavía.");
         } else {
