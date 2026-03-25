@@ -93,9 +93,11 @@ public class Vista {
     }
 
     private void modificarCliente() throws TallerMecanicoExcepcion {
+        Cliente nuevo;
         Consola.mostrarCabecera("Modificar un cliente");
-        controlador.modificarCliente(Consola.leerClienteDni(),Consola.leerNuevoNombre(),Consola.leerNuevoTelefono());
+        nuevo = controlador.modificarCliente(Consola.leerClienteDni(),Consola.leerNuevoNombre(),Consola.leerNuevoTelefono());
         System.out.println("Se ha modificado el cliente correctamente.");
+        System.out.println(nuevo);
     }
 
     private void anadirHoras() throws TallerMecanicoExcepcion {
