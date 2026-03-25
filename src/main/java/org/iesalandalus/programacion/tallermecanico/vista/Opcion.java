@@ -40,11 +40,11 @@ public enum Opcion {
         this.mensaje = mensaje;
     }
 
-    public boolean esValida(int numeroOpcion){
+    public static boolean esValida(int numeroOpcion){
         return opciones.containsKey(numeroOpcion);
     }
 
-   public Opcion get(int numeroOpcion){
+    public Opcion get(int numeroOpcion){
         if (!esValida(numeroOpcion)){
             throw new IllegalArgumentException("La opción no es valida");
         }
@@ -54,6 +54,6 @@ public enum Opcion {
 
     @Override
     public String toString() {
-        return String.format("%d.- %s)", numeroOpcion, mensaje);
+        return String.format("%d.- %s", numeroOpcion, mensaje);
     }
 }

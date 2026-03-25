@@ -50,7 +50,8 @@ public class Clientes {
 
     public Cliente buscar(Cliente cliente){
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
-        return (coleccionClientes.contains(cliente)) ? cliente : null;
+        int indice = coleccionClientes.indexOf(cliente);
+        return (indice != -1 ? coleccionClientes.get(indice) : null);
     }
 
     public void borrar(Cliente cliente) throws TallerMecanicoExcepcion {

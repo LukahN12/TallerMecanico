@@ -120,7 +120,8 @@ public class Revisiones {
 
     public Revision buscar(Revision revision){
         Objects.requireNonNull(revision, "No se puede buscar una revisión nula.");
-        return (coleccionRevisiones.contains(revision)) ? revision : null;
+        int indice = coleccionRevisiones.indexOf(revision);
+        return (indice != - 1 ? coleccionRevisiones.get(indice) : null);
     }
 
     public void borrar(Revision revision) throws TallerMecanicoExcepcion {

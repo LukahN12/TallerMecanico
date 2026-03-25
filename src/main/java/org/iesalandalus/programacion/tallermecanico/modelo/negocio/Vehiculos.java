@@ -30,7 +30,8 @@ public class Vehiculos {
 
     public Vehiculo buscar(Vehiculo vehiculo){
         Objects.requireNonNull(vehiculo, "No se puede buscar un vehículo nulo.");
-        return (coleccionVehiculos.contains(vehiculo)) ? vehiculo : null;
+        int indice = coleccionVehiculos.indexOf(vehiculo);
+        return (indice != -1 ? coleccionVehiculos.get(indice) : null);
     }
 
     public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
