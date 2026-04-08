@@ -53,7 +53,7 @@ public class Vista {
                 case LISTAR_REVISION_VEHICULO -> listarRevisionesVehiculo();
                 case SALIR -> salir();
             }
-        } catch (TallerMecanicoExcepcion | IllegalArgumentException e){
+        } catch (Exception e){
             System.out.printf("ERROR: %s %n", e.getMessage());
         }
 

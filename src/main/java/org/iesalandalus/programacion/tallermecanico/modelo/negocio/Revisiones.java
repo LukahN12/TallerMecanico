@@ -87,17 +87,13 @@ public class Revisiones {
         Revision revisionResultado = null;
         Objects.requireNonNull(revision,"No puedo operar sobre una revisión nula.");
 
-        for (Revision revision1 : coleccionRevisiones){
-            if (revision1.equals(revision)){
-                revisionResultado = revision;
-            }
-        }
+        revisionResultado = buscar(revision);
 
         if (revisionResultado == null){
             throw new TallerMecanicoExcepcion("No existe ninguna revisión igual.");
         }
 
-        return revision;
+        return revisionResultado;
     }
 
     public Revision anadirHoras(Revision revision,int horas) throws TallerMecanicoExcepcion {

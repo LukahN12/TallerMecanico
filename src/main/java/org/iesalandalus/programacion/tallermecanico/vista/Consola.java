@@ -5,18 +5,22 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Consola {
-   private static final DateTimeFormatter CADENA_FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+   private static final String CADENA_FORMATO_FECHA ="dd/MM/yyyy";
 
    private Consola(){
 
    }
 
    public static void mostrarCabecera(String mensaje){
+       for (int i = 0; i < mensaje.length();i++){
+           System.out.print("_");
+       }
+       System.out.println();
        System.out.println(mensaje);
        for (int i = 0; i < mensaje.length();i++){
            System.out.print("_");
@@ -47,16 +51,14 @@ public class Consola {
     }
 
     public static LocalDate leerFecha(String mensaje){
-        System.out.print(mensaje);
-        LocalDate fecha = null;
-        do {
-            try {
-                fecha = LocalDate.parse(Entrada.cadena(),CADENA_FORMATO_FECHA);
-            } catch (DateTimeException e){
-                System.out.printf("ERROR1: %s %n",e.getMessage());
-            }
-        } while (fecha == null);
-
+        LocalDate fecha;
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern(CADENA_FORMATO_FECHA);
+        mensaje = String.format("%s (%s) ", mensaje, CADENA_FORMATO_FECHA);
+        try {
+            fecha = LocalDate.parse(leerCadena(mensaje), formatoFecha);
+        } catch (DateTimeParseException e){
+            fecha = null;
+        }
         return fecha;
     }
 
@@ -97,7 +99,10 @@ public class Consola {
     }
 
     public static Revision leerRevision(){
-       return new Revision(leerCliente(),leerVehiculo(),leerFecha("¿Que fecha de inicio quieres introducir? "));
+       Cliente nombre = leerClienteDni();
+       Vehiculo vehiculo = leerVehiculoMatricula();
+       LocalDate fecha = leerFecha("¿Que fecha de inicio quieres introducir? ");
+       return new Revision(nombre,vehiculo,fecha);
     }
 
     public static int leerHoras(){

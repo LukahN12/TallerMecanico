@@ -40,7 +40,7 @@ public class Modelo {
 
     public void insertar(Revision revision) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(revision,"Necesitas una revisión que insertar");
-        Revision revision1 = new Revision(clientes.buscar(revision.getCliente()),vehiculos.buscar(revision.getVehiculo()),revision.getFechaFin());
+        Revision revision1 = new Revision(clientes.buscar(revision.getCliente()),vehiculos.buscar(revision.getVehiculo()),revision.getFechaInicio());
         revisiones.insertar(revision1);
     }
 
