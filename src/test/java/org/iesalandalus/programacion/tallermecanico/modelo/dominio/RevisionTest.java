@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class RevisionTest {
+
+public class RevisionTest {
 
     private static Cliente cliente;
     private static Vehiculo vehiculo;
@@ -143,5 +144,4 @@ class RevisionTest {
         cadena = String.format("Revisión -> %s - %s (%s - %s): 0 horas, 10,00 € total", cadenaCliente, caenaVehiculo, cadenaAyer, cadenaHoy);
         assertEquals(cadena, revision.toString());
     }
-
 }

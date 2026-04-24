@@ -70,7 +70,7 @@ class TrabajoTest {
         assertNull(revision.getFechaFin());
         assertEquals(0, revision.getHoras());
         assertEquals(0, revision.getPrecio());
-        Revision revisonSemanaPasada = new Revision(cliente, vehiculo, semanaPasada);
+        Trabajo revisonSemanaPasada = new Revision(cliente, vehiculo, semanaPasada);
         assertEquals(semanaPasada, revisonSemanaPasada.getFechaInicio());
     }
 
@@ -102,12 +102,12 @@ class TrabajoTest {
     void constructorTrabajoValidoCopiaTrabajoCorrectamente() {
         assertDoesNotThrow(() -> revision.anadirHoras(5));
         assertDoesNotThrow(() -> revision.cerrar(hoy));
-        Revision copiaRevision = new Revision(revision);
-        assertNotSame(cliente, copiaRevision.getCliente());
-        assertSame(vehiculo, copiaRevision.getVehiculo());
-        assertEquals(ayer, copiaRevision.getFechaInicio());
-        assertEquals(hoy, copiaRevision.getFechaFin());
-        assertEquals(5, copiaRevision.getHoras());
+        Trabajo copiaTrabajo = new Revision(revision);
+        assertNotSame(cliente, copiaTrabajo.getCliente());
+        assertSame(vehiculo, copiaTrabajo.getVehiculo());
+        assertEquals(ayer, copiaTrabajo.getFechaInicio());
+        assertEquals(hoy, copiaTrabajo.getFechaFin());
+        assertEquals(5, copiaTrabajo.getHoras());
         Mecanico mecanico = new Mecanico(cliente, vehiculo, ayer);
         assertDoesNotThrow(() -> mecanico.anadirHoras(5));
         assertDoesNotThrow(() -> mecanico.anadirPrecioMaterial(100));
@@ -131,12 +131,12 @@ class TrabajoTest {
     void copiarTrabajoValidoCopiaTrabajoCorrectamente() {
         assertDoesNotThrow(() -> revision.anadirHoras(5));
         assertDoesNotThrow(() -> revision.cerrar(hoy));
-        Revision copiaRevision = (Revision) Trabajo.copiar(revision);
-        assertNotSame(cliente, copiaRevision.getCliente());
-        assertSame(vehiculo, copiaRevision.getVehiculo());
-        assertEquals(ayer, copiaRevision.getFechaInicio());
-        assertEquals(hoy, copiaRevision.getFechaFin());
-        assertEquals(5, copiaRevision.getHoras());
+        Trabajo copiaTrabajo = (Trabajo) Trabajo.copiar(revision);
+        assertNotSame(cliente, copiaTrabajo.getCliente());
+        assertSame(vehiculo, copiaTrabajo.getVehiculo());
+        assertEquals(ayer, copiaTrabajo.getFechaInicio());
+        assertEquals(hoy, copiaTrabajo.getFechaFin());
+        assertEquals(5, copiaTrabajo.getHoras());
         Mecanico mecanico = new Mecanico(cliente, vehiculo, ayer);
         assertDoesNotThrow(() -> mecanico.anadirHoras(5));
         assertDoesNotThrow(() -> mecanico.anadirPrecioMaterial(100));
@@ -158,8 +158,8 @@ class TrabajoTest {
 
     @Test
     void getTrabajoVehiculoValidoDevuelveTrabajoConDichoVehiculo() {
-        Trabajo trabajo = Trabajo.get(revision.getVehiculo());
-        assertEquals(revision.getVehiculo(), trabajo.getVehiculo());
+        Trabajo trabajo = Trabajo.get(this.revision.getVehiculo());
+        assertEquals(this.revision.getVehiculo(), trabajo.getVehiculo());
     }
 
     @Test
@@ -225,12 +225,12 @@ class TrabajoTest {
 
     @Test
     void equalsHashCodeSeBasanSoloEnClienteVehiculoFechaInicio() {
-        Revision otraRevision = new Revision(cliente, vehiculo, ayer);
-        assertEquals(revision, otraRevision);
-        assertEquals(revision.hashCode(), otraRevision.hashCode());
-        assertDoesNotThrow(() -> otraRevision.cerrar(hoy));
-        assertEquals(revision, otraRevision);
-        assertEquals(revision.hashCode(), otraRevision.hashCode());
+        Trabajo otraTrabajo = new Revision(cliente, vehiculo, ayer);
+        assertEquals(revision, otraTrabajo);
+        assertEquals(revision.hashCode(), otraTrabajo.hashCode());
+        assertDoesNotThrow(() -> otraTrabajo.cerrar(hoy));
+        assertEquals(revision, otraTrabajo);
+        assertEquals(revision.hashCode(), otraTrabajo.hashCode());
     }
 
 }

@@ -1,11 +1,11 @@
 package org.iesalandalus.programacion.tallermecanico.modelo;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Revisiones;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Vehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Trabajos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,12 +16,12 @@ public class Modelo {
 
     private Clientes clientes;
     private Vehiculos vehiculos;
-    private Revisiones revisiones;
+    private Trabajos trabajos;
 
     public void comenzar(){
         clientes = new Clientes();
         vehiculos = new Vehiculos();
-        revisiones = new Revisiones();
+        trabajos = new Trabajos();
     }
 
     public void terminar(){
@@ -38,10 +38,10 @@ public class Modelo {
         vehiculos.insertar(vehiculo);
     }
 
-    public void insertar(Revision revision) throws TallerMecanicoExcepcion {
-        Objects.requireNonNull(revision,"Necesitas una revisión que insertar");
-        Revision revision1 = new Revision(clientes.buscar(revision.getCliente()),vehiculos.buscar(revision.getVehiculo()),revision.getFechaInicio());
-        revisiones.insertar(revision1);
+    public void insertar(Trabajo trabajo) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(trabajo,"Necesitas una revisión que insertar");
+        Trabajo trabajo1 = new Trabajo(clientes.buscar(trabajo.getCliente()),vehiculos.buscar(trabajo.getVehiculo()), trabajo.getFechaInicio());
+        trabajos.insertar(trabajo1);
     }
 
     public Cliente buscar(Cliente cliente){
@@ -54,9 +54,9 @@ public class Modelo {
         return Objects.requireNonNull(vehiculos.buscar(vehiculo),"El vehiculo a buscar no existe.") ;
     }
 
-    public Revision buscar(Revision revision) {
-        Objects.requireNonNull(revision,"Necesitas una revisión que buscar");
-        return new Revision(Objects.requireNonNull(revisiones.buscar(revision), "La revisión a buscar no existe."));
+    public Trabajo buscar(Trabajo trabajo) {
+        Objects.requireNonNull(trabajo,"Necesitas una revisión que buscar");
+        return new Trabajo(Objects.requireNonNull(trabajos.buscar(trabajo), "La revisión a buscar no existe."));
 
     }
 
@@ -65,27 +65,27 @@ public class Modelo {
         return clientes.modificar(cliente,nombre,telefono);
     }
 
-    public Revision anadirHoras(Revision revision,int horas) throws TallerMecanicoExcepcion {
-        Objects.requireNonNull(revision,"Necesitas una revisión a la que añadirle horas.");
-        return revisiones.anadirHoras(revision,horas);
+    public Trabajo anadirHoras(Trabajo trabajo, int horas) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(trabajo,"Necesitas una revisión a la que añadirle horas.");
+        return trabajos.anadirHoras(trabajo,horas);
     }
 
-    public Revision anadirPrecioMaterial(Revision revision, float precioMaterial) throws TallerMecanicoExcepcion {
-        Objects.requireNonNull(revision,"Necesitas una revisión a la que añadirle horas.");
-        return revisiones.anadirPrecioMaterial(revision,precioMaterial);
+    public Trabajo anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(trabajo,"Necesitas una revisión a la que añadirle horas.");
+        return trabajos.anadirPrecioMaterial(trabajo,precioMaterial);
     }
 
-    public Revision cerrar(Revision revision,LocalDate fechaFin) throws TallerMecanicoExcepcion {
-        Objects.requireNonNull(revision,"Necesitas una revisión a la que darle cierre.");
-        Objects.requireNonNull(revision,"Necesitas una fecha para el cierre");
-        return revisiones.cerrar(revision,fechaFin);
+    public Trabajo cerrar(Trabajo trabajo, LocalDate fechaFin) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(trabajo,"Necesitas una revisión a la que darle cierre.");
+        Objects.requireNonNull(trabajo,"Necesitas una fecha para el cierre");
+        return trabajos.cerrar(trabajo,fechaFin);
     }
 
     public void borrar(Cliente cliente) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(cliente,"Necesitas un cliente que borrar.");
-        List<Revision> revisionesCliente = revisiones.get(cliente);
-        for (Revision revision : revisionesCliente){
-            revisiones.borrar(revision);
+        List<Trabajo> revisionesCliente = trabajos.get(cliente);
+        for (Trabajo trabajo : revisionesCliente){
+            trabajos.borrar(trabajo);
         }
 
         clientes.borrar(cliente);
@@ -93,16 +93,16 @@ public class Modelo {
 
     public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(vehiculo,"Necesitar tener un vehiculo que borrar");
-        List<Revision> revisionesVehiculo = revisiones.get(vehiculo);
-        for (Revision revision : revisionesVehiculo){
-            revisiones.borrar(revision);
+        List<Trabajo> revisionesVehiculo = trabajos.get(vehiculo);
+        for (Trabajo trabajo : revisionesVehiculo){
+            trabajos.borrar(trabajo);
         }
         vehiculos.borrar(vehiculo);
     }
 
-    public void borrar(Revision revision) throws TallerMecanicoExcepcion {
-        Objects.requireNonNull(revision,"Necesitas tener una revisión que borrar");
-        revisiones.borrar(revision);
+    public void borrar(Trabajo trabajo) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(trabajo,"Necesitas tener una revisión que borrar");
+        trabajos.borrar(trabajo);
     }
 
     public List<Cliente> getClientes(){
@@ -124,29 +124,29 @@ public class Modelo {
         return coleccionVehiculos;
     }
 
-    public List<Revision> getRevisiones(){
-        List<Revision> coleccionRevisiones = new ArrayList<>();
-        for (Revision revision : revisiones.get()){
-            Revision revision1 = new Revision(revision);
-            coleccionRevisiones.add(revision1);
+    public List<Trabajo> getRevisiones(){
+        List<Trabajo> coleccionRevisiones = new ArrayList<>();
+        for (Trabajo trabajo : trabajos.get()){
+            Trabajo trabajo1 = new Trabajo(trabajo);
+            coleccionRevisiones.add(trabajo1);
         }
 
         return coleccionRevisiones;
     }
 
-    public List<Revision> getRevisiones(Cliente cliente){
-        List<Revision> coleccionRevisiones = new ArrayList<>();
-        for (Revision revision : revisiones.get(cliente)){
-            coleccionRevisiones.add(new Revision(revision));
+    public List<Trabajo> getRevisiones(Cliente cliente){
+        List<Trabajo> coleccionRevisiones = new ArrayList<>();
+        for (Trabajo trabajo : trabajos.get(cliente)){
+            coleccionRevisiones.add(new Trabajo(trabajo));
         }
 
         return coleccionRevisiones;
     }
 
-    public List<Revision> getRevisiones(Vehiculo vehiculo){
-        List<Revision> coleccionRevisiones = new ArrayList<>();
-        for (Revision revision : revisiones.get(vehiculo)){
-            coleccionRevisiones.add(new Revision(revision));
+    public List<Trabajo> getRevisiones(Vehiculo vehiculo){
+        List<Trabajo> coleccionRevisiones = new ArrayList<>();
+        for (Trabajo trabajo : trabajos.get(vehiculo)){
+            coleccionRevisiones.add(new Trabajo(trabajo));
         }
 
         return coleccionRevisiones;

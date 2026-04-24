@@ -3,7 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.vista;
 import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 
 import java.util.List;
@@ -162,36 +162,36 @@ public class Vista {
 
     private void listarRevisiones(){
         Consola.mostrarCabecera("Lista de revisiones");
-        List<Revision> revisiones = controlador.listarRevisiones();
+        List<Trabajo> revisiones = controlador.listarRevisiones();
         if (revisiones.isEmpty()){
             System.out.println("No hay revisiones todavía.");
         } else {
-            for(Revision revision : revisiones){
-                System.out.println(revision);
+            for(Trabajo trabajo : revisiones){
+                System.out.println(trabajo);
             }
         }
     }
 
     private void listarRevisionesCliente(){
         Consola.mostrarCabecera("Lista de revisiones en base a los clientes");
-        List<Revision> revisiones = controlador.listarRevisionesCliente(Consola.leerCliente());
+        List<Trabajo> revisiones = controlador.listarRevisionesCliente(Consola.leerCliente());
         if (revisiones.isEmpty()){
             System.out.println("No hay revisiones adecuadas todavía.");
         } else {
-            for(Revision revision : revisiones){
-                System.out.println(revision);
+            for(Trabajo trabajo : revisiones){
+                System.out.println(trabajo);
             }
         }
     }
 
     private void listarRevisionesVehiculo(){
         Consola.mostrarCabecera("Lista de revisiones en base a los vehículos");
-        List<Revision> revisiones = controlador.listarRevisionesVehiculo(Consola.leerVehiculo());
+        List<Trabajo> revisiones = controlador.listarRevisionesVehiculo(Consola.leerVehiculo());
         if (revisiones.isEmpty()){
             System.out.println("No hay revisiones adecuadas todavía.");
         } else {
-            for(Revision revision : revisiones){
-                System.out.println(revision);
+            for(Trabajo trabajo : revisiones){
+                System.out.println(trabajo);
             }
         }
     }
