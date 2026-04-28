@@ -89,14 +89,18 @@ public class Trabajos implements ITrabajos {
         }
     }
 
-    private Trabajo getTrabajoAbierto(Trabajo trabajo) throws TallerMecanicoExcepcion {
-        Trabajo trabajoResultado;
+    private Trabajo getTrabajoAbierto(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
+        Trabajo trabajoResultado = null;
 
-        trabajoResultado = buscar(trabajo);
-
-        if (trabajoResultado.estaCerrado()) {
-            throw new TallerMecanicoExcepcion("El trabajo ya esta cerrado");
+        for (Trabajo trabajo : coleccionTrabajos){
+            if (!trabajo.estaCerrado() && trabajo.getVehiculo().equals(vehiculo)) {
+                trabajoResultado = trabajo;
+            }
         }
+        if (trabajoResultado == null){
+            throw new TallerMecanicoExcepcion("No existe ningún trabajo abierto para dicho vehículo.");
+        }
+
 
         return trabajoResultado;
     }
@@ -104,7 +108,7 @@ public class Trabajos implements ITrabajos {
     @Override
     public Trabajo anadirHoras(Trabajo trabajo, int horas) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(trabajo,"No puedo añadir horas a un trabajo nulo.");
-        Trabajo trabajo1 = getTrabajoAbierto(trabajo);
+        Trabajo trabajo1 = getTrabajoAbierto(trabajo.getVehiculo());
         trabajo1.anadirHoras(horas);
         return trabajo1;
     }
@@ -112,7 +116,7 @@ public class Trabajos implements ITrabajos {
     @Override
     public Trabajo anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(trabajo,"No puedo añadir precio del material a un trabajo nulo.");
-        Trabajo trabajo1 = getTrabajoAbierto(trabajo);
+        Trabajo trabajo1 = getTrabajoAbierto(trabajo.getVehiculo());
         if (!(trabajo1 instanceof Mecanico mecanico)){
             throw new TallerMecanicoExcepcion("No se puede añadir precio al material para este tipo de trabajos.");
         }
@@ -123,7 +127,7 @@ public class Trabajos implements ITrabajos {
     @Override
     public Trabajo cerrar(Trabajo trabajo, LocalDate fechaFin) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(trabajo,"No puedo cerrar un trabajo nulo.");
-        Trabajo trabajo1 = getTrabajoAbierto(trabajo);
+        Trabajo trabajo1 = getTrabajoAbierto(trabajo.getVehiculo());
         trabajo1.cerrar(fechaFin);
         return trabajo1;
     }
