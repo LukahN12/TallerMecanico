@@ -1,9 +1,9 @@
-package org.iesalandalus.programacion.tallermecanico.vista;
+package org.iesalandalus.programacion.tallermecanico.vista.eventos;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Opcion {
+public enum Evento {
     INSERTAR_CLIENTE (11, "Insertar cliente"),
     BUSCAR_CLIENTE (12, "Buscar cliente"),
     BORRAR_CLIENTE (13, "Borrar cliente"),
@@ -16,40 +16,41 @@ public enum Opcion {
     LISTAR_VEHICULO (24,"Listar vehiculo"),
     //-
     INSERTAR_REVISION (31,"Insertar revisión"),
-    BUSCAR_REVISION (32,"Buscar revisión"),
-    BORRAR_REVISION (33,"Borrar revisión"),
-    LISTAR_REVISION (34, "Listar revisión"),
-    LISTAR_REVISION_CLIENTE (35, "Listar revisión cliente"),
-    LISTAR_REVISION_VEHICULO (36,"Listar revisión vehiculo"),
-    ANADIR_HORAS_REVISION (37, "Añadir horas a la revisión"),
-    ANADIR_PRECIO_MATERIAL_REVISION (38,"Añadir precio material de revisión"),
-    CERRAR_REVISION (39,"Cerrar revisión"),
+    INSERTAR_MECANICO (32,"Insertar revisión"),
+    BUSCAR_TRABAJO (33,"Buscar revisión"),
+    BORRAR_TRABAJO (34,"Borrar revisión"),
+    LISTAR_TRABAJO (35, "Listar revisión"),
+    LISTAR_TRABAJO_CLIENTE (36, "Listar revisión cliente"),
+    LISTAR_TRABAJO_VEHICULO (37,"Listar revisión vehiculo"),
+    ANADIR_HORAS_TRABAJO (38, "Añadir horas a la revisión"),
+    ANADIR_PRECIO_MATERIAL_TRABAJO (39,"Añadir precio material de revisión"),
+    CERRAR_TRABAJO (40,"Cerrar revisión"),
     SALIR (1,"Salir");
 
     private int numeroOpcion;
     private String mensaje;
-    static Map<Integer, Opcion> opciones = new HashMap<>();
+    static Map<Integer, Evento> eventos = new HashMap<>();
     static {
-        for (Opcion opcion : values()) {
-            opciones.put(opcion.numeroOpcion, opcion);
+        for (Evento evento : values()) {
+            eventos.put(evento.numeroOpcion, evento);
         }
     }
 
-    private Opcion(int numeroOpcion,String mensaje){
+    private Evento(int numeroOpcion, String mensaje){
         this.numeroOpcion = numeroOpcion;
         this.mensaje = mensaje;
     }
 
     public static boolean esValida(int numeroOpcion){
-        return opciones.containsKey(numeroOpcion);
+        return eventos.containsKey(numeroOpcion);
     }
 
-    public Opcion get(int numeroOpcion){
+    public static Evento get(int numeroOpcion){
         if (!esValida(numeroOpcion)){
             throw new IllegalArgumentException("La opción no es valida");
         }
 
-        return opciones.get(numeroOpcion);
+        return eventos.get(numeroOpcion);
     }
 
     @Override
