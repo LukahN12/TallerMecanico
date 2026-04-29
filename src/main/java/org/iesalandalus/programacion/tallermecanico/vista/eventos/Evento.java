@@ -16,7 +16,7 @@ public enum Evento {
     LISTAR_VEHICULO (24,"Listar vehiculo"),
     //-
     INSERTAR_REVISION (31,"Insertar revisión"),
-    INSERTAR_MECANICO (32,"Insertar revisión"),
+    INSERTAR_MECANICO (32,"Insertar trabajo mecánico"),
     BUSCAR_TRABAJO (33,"Buscar revisión"),
     BORRAR_TRABAJO (34,"Borrar revisión"),
     LISTAR_TRABAJO (35, "Listar revisión"),
