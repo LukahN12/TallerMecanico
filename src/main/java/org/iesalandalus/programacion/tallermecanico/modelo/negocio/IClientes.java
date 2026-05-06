@@ -15,4 +15,8 @@ public interface IClientes {
     Cliente buscar(Cliente cliente);
 
     void borrar(Cliente cliente) throws TallerMecanicoExcepcion;
+
+    void comenzar();
+
+    void terminar();
 }

@@ -1,23 +1,29 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Mecanico;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Trabajo;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import javax.xml.parsers.DocumentBuilder;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Trabajos implements ITrabajos {
 
     private List<Trabajo> coleccionTrabajos;
+    private static Trabajos instancia;
 
-    public Trabajos() {
+    private Trabajos() {
         coleccionTrabajos = new ArrayList<>();
+    }
+
+    private Trabajos getInstancia(){
+        if (instancia ==  null){
+            instancia = new Trabajos();
+        }
+        return instancia;
     }
 
     @Override
@@ -150,4 +156,37 @@ public class Trabajos implements ITrabajos {
 
         coleccionTrabajos.remove(buscado);
     }
+
+    public Map<TipoTrabajo,Integer> getEstadisticasMensuales(LocalDate mes){
+        Map<TipoTrabajo,Integer> mapa = inicializarEstadisticas();
+
+        for (Trabajo trabajo : coleccionTrabajos){
+            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth()) && trabajo.getFechaInicio().getYear() == mes.getYear()){
+                TipoTrabajo tipo = TipoTrabajo.get(trabajo);
+                mapa.put(tipo,mapa.get(tipo) + 1);
+            }
+        }
+
+        return mapa;
+    }
+
+    private Map<TipoTrabajo,Integer> inicializarEstadisticas(){
+        Map<TipoTrabajo,Integer> mapa = new EnumMap<>(TipoTrabajo.class);
+        for (TipoTrabajo tipoTrabajo : TipoTrabajo.values()){
+            mapa.put(tipoTrabajo,0);
+        }
+        return mapa;
+    }
+
+    @Override
+    public void comenzar() {
+
+    }
+
+    @Override
+    public void terminar() {
+
+    }
+
+
 }

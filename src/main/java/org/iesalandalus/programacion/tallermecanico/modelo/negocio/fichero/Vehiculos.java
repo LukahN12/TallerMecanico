@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
@@ -11,9 +11,17 @@ import java.util.Objects;
 public class Vehiculos implements IVehiculos {
 
     private List<Vehiculo> coleccionVehiculos;
+    private static Vehiculos instancia;
 
-    public Vehiculos() {
+    private Vehiculos() {
         coleccionVehiculos = new ArrayList<>();
+    }
+
+    private Vehiculos getInstancia(){
+        if (instancia ==  null){
+            instancia = new Vehiculos();
+        }
+        return instancia;
     }
 
     @Override
@@ -48,5 +56,15 @@ public class Vehiculos implements IVehiculos {
         }
 
         coleccionVehiculos.remove(buscado);
+    }
+
+    @Override
+    public void comenzar() {
+
+    }
+
+    @Override
+    public void terminar() {
+
     }
 }

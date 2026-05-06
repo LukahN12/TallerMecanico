@@ -1,13 +1,16 @@
 package org.iesalandalus.programacion.tallermecanico.vista.texto;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero.Trabajos;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class VistaTexto implements Vista {
     private GestorEventos gestorEventos = new GestorEventos(Evento.values());
@@ -135,10 +138,8 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarClientes(Cliente[] clientes){
         Consola.mostrarCabecera("Lista de clientes");
-        List<Cliente> listaClientes = new ArrayList<>();
-        for (Cliente cliente : clientes){
-            listaClientes.add(cliente);
-        }
+        List<Cliente> listaClientes = List.of(clientes);
+        listaClientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
         if (listaClientes.isEmpty()){
             System.out.println("No hay clientes todavía.");
         } else {
@@ -151,10 +152,8 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarVehiculos(Vehiculo[] vehiculos){
         Consola.mostrarCabecera("Lista de vehículos");
-        List<Vehiculo> listaVehiculos = new ArrayList<>();
-        for (Vehiculo vehiculo : vehiculos){
-            listaVehiculos.add(vehiculo);
-        }
+        List<Vehiculo> listaVehiculos = List.of(vehiculos);
+        listaVehiculos.sort(Comparator.comparing(Vehiculo::marca).thenComparing(Vehiculo::modelo).thenComparing(Vehiculo::matricula));
         if (listaVehiculos.isEmpty()){
             System.out.println("No hay vehículos todavía.");
         } else {
@@ -167,10 +166,9 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarTrabajos(Trabajo[] trabajos){
         Consola.mostrarCabecera("Lista de revisiones");
-        List<Trabajo> listaTrabajos = new ArrayList<>();
-        for (Trabajo trabajo : trabajos){
-            listaTrabajos.add(trabajo);
-        }
+        List<Trabajo> listaTrabajos = List.of(trabajos);
+        Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
+        listaTrabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente,comparadorCliente));
         if (listaTrabajos.isEmpty()){
             System.out.println("No hay revisiones todavía.");
         } else {
@@ -178,5 +176,14 @@ public class VistaTexto implements Vista {
                 System.out.println(trabajo);
             }
         }
+    }
+
+    public LocalDate leerMes(){
+        return Consola.leerFecha("Que mes quieres elegir?");
+    }
+
+    public void mostrarEstadisticasMensuales(Map<TipoTrabajo,Integer> estadisticas){
+        Consola.mostrarCabecera("Estadisticas del mes");
+        System.out.println(estadisticas);
     }
 }

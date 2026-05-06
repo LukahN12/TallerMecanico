@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;

@@ -13,4 +13,8 @@ public interface IVehiculos {
     Vehiculo buscar(Vehiculo vehiculo);
 
     void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion;
+
+    void comenzar();
+
+    void terminar();
 }

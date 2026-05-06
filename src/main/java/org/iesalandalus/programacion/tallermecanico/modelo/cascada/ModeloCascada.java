@@ -4,14 +4,10 @@ import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Trabajos;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero.Trabajos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ModeloCascada implements Modelo {
 
@@ -208,5 +204,35 @@ public class ModeloCascada implements Modelo {
         }
 
         return coleccionTrabajos;
+    }
+
+    @Override
+    public Map<TipoTrabajo, Integer> getEstadisticasMensuales(LocalDate mes) {
+        int revisiones = 0;
+        int trabajosMecanicos = 0;
+        Map<TipoTrabajo,Integer> mapa = inicializarEstadisticas();
+
+        for (Trabajo trabajo : getTrabajos()){
+            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth()) && trabajo.getFechaInicio().getYear() == mes.getYear()){
+                if (trabajo instanceof Revision){
+                    revisiones += 1;
+                } else {
+                    trabajosMecanicos += 1;
+                }
+            }
+        }
+
+        mapa.put(TipoTrabajo.REVISION,revisiones);
+        mapa.put(TipoTrabajo.MECANICO,trabajosMecanicos);
+
+        return mapa;
+    }
+
+    private Map<TipoTrabajo,Integer> inicializarEstadisticas(){
+        Map<TipoTrabajo,Integer> mapa = new EnumMap<>(TipoTrabajo.class);
+        for (TipoTrabajo tipoTrabajo : TipoTrabajo.values()){
+            mapa.put(tipoTrabajo,0);
+        }
+        return mapa;
     }
 }

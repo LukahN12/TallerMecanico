@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero.Trabajos;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
