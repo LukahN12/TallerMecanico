@@ -1,13 +1,11 @@
 package org.iesalandalus.programacion.tallermecanico.vista.texto;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero.Trabajos;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -136,11 +134,10 @@ public class VistaTexto implements Vista {
     }
 
     @Override
-    public void mostrarClientes(Cliente[] clientes){
+    public void mostrarClientes(List<Cliente> clientes){
         Consola.mostrarCabecera("Lista de clientes");
-        List<Cliente> listaClientes = List.of(clientes);
-        listaClientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
-        if (listaClientes.isEmpty()){
+        clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
+        if (clientes.isEmpty()){
             System.out.println("No hay clientes todavía.");
         } else {
             for(Cliente cliente : clientes){
@@ -150,29 +147,27 @@ public class VistaTexto implements Vista {
     }
 
     @Override
-    public void mostrarVehiculos(Vehiculo[] vehiculos){
+    public void mostrarVehiculos(List<Vehiculo> vehiculos){
         Consola.mostrarCabecera("Lista de vehículos");
-        List<Vehiculo> listaVehiculos = List.of(vehiculos);
-        listaVehiculos.sort(Comparator.comparing(Vehiculo::marca).thenComparing(Vehiculo::modelo).thenComparing(Vehiculo::matricula));
-        if (listaVehiculos.isEmpty()){
+        vehiculos.sort(Comparator.comparing(Vehiculo::marca).thenComparing(Vehiculo::modelo).thenComparing(Vehiculo::matricula));
+        if (vehiculos.isEmpty()){
             System.out.println("No hay vehículos todavía.");
         } else {
-            for(Vehiculo vehiculo : listaVehiculos){
+            for(Vehiculo vehiculo : vehiculos){
                 System.out.println(vehiculo);
             }
         }
     }
 
     @Override
-    public void mostrarTrabajos(Trabajo[] trabajos){
-        Consola.mostrarCabecera("Lista de revisiones");
-        List<Trabajo> listaTrabajos = List.of(trabajos);
+    public void mostrarTrabajos(List<Trabajo> trabajos){
+        Consola.mostrarCabecera("Lista de trabajos");
         Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
-        listaTrabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente,comparadorCliente));
-        if (listaTrabajos.isEmpty()){
-            System.out.println("No hay revisiones todavía.");
+        trabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente,comparadorCliente));
+        if (trabajos.isEmpty()){
+            System.out.println("No hay trabajos todavía.");
         } else {
-            for(Trabajo trabajo : listaTrabajos){
+            for(Trabajo trabajo : trabajos){
                 System.out.println(trabajo);
             }
         }

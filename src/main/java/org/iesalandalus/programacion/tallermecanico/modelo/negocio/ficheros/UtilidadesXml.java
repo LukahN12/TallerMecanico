@@ -1,7 +1,6 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 

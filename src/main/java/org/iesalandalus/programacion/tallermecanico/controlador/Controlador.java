@@ -46,9 +46,9 @@ public class Controlador implements IControlador {
                 case BORRAR_CLIENTE -> { modelo.borrar(vista.leerCliente()); vista.notificarResultado(Evento.BORRAR_CLIENTE, "Cliente borrado correctamente",true);}
                 case BORRAR_VEHICULO -> { modelo.borrar(vista.leerVehiculo()); vista.notificarResultado(Evento.BORRAR_VEHICULO, "Vehiculo borrado correctamente",true);}
                 case BORRAR_TRABAJO -> { modelo.borrar(vista.leerTrabajoVehiculo()); vista.notificarResultado(Evento.BORRAR_TRABAJO, "Trabajo borrado correctamente",true);}
-                case LISTAR_CLIENTE -> { modelo.getClientes(); vista.notificarResultado(Evento.LISTAR_CLIENTE, "Clientes listados correctamente",true);}
-                case LISTAR_VEHICULO -> { modelo.getVehiculos(); vista.notificarResultado(Evento.LISTAR_VEHICULO, "Vehículos listados correctamente",true);}
-                case LISTAR_TRABAJO -> { modelo.getTrabajos(); vista.notificarResultado(Evento.LISTAR_TRABAJO, "Trabajos listados correctamente",true);}
+                case LISTAR_CLIENTE -> { vista.mostrarClientes(modelo.getClientes()); vista.notificarResultado(Evento.LISTAR_CLIENTE, "Clientes listados correctamente",true);}
+                case LISTAR_VEHICULO -> { vista.mostrarVehiculos(modelo.getVehiculos()); vista.notificarResultado(Evento.LISTAR_VEHICULO, "Vehículos listados correctamente",true);}
+                case LISTAR_TRABAJO -> { vista.mostrarTrabajos(modelo.getTrabajos()); vista.notificarResultado(Evento.LISTAR_TRABAJO, "Trabajos listados correctamente",true);}
                 case LISTAR_TRABAJO_CLIENTE -> { modelo.getTrabajos(vista.leerCliente()); vista.notificarResultado(Evento.LISTAR_TRABAJO_CLIENTE, "Trabajos de un cliente listados correctamente",true);}
                 case LISTAR_TRABAJO_VEHICULO -> { modelo.getTrabajos(vista.leerVehiculo()); vista.notificarResultado(Evento.LISTAR_TRABAJO_VEHICULO, "Trabajos de un vehiculo listados correctamente",true);}
                 case MOSTRAR_ESTADISTICAS_MENSUALES -> { modelo.getEstadisticasMensuales(vista.leerMes()); vista.notificarResultado(Evento.MOSTRAR_ESTADISTICAS_MENSUALES, "Estadisticas mensuales mostradas correctamente",true);}

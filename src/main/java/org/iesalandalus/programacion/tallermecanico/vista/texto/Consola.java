@@ -18,6 +18,7 @@ public class Consola {
    }
 
    public static void mostrarCabecera(String mensaje){
+       System.out.println( );
        for (int i = 0; i < mensaje.length();i++){
            System.out.print("_");
        }

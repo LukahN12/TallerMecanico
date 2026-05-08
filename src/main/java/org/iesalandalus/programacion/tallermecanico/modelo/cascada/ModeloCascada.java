@@ -4,7 +4,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero.Trabajos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros.Trabajos;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -25,11 +25,17 @@ public class ModeloCascada implements Modelo {
     @Override
     public void comenzar(){
         System.out.println("Modelo comenzado.");
+        clientes.comenzar();
+        vehiculos.comenzar();
+        trabajos.comenzar();
     }
 
     @Override
     public void terminar(){
         System.out.println("Se termino de crear el modelo.");
+        clientes.terminar();
+        vehiculos.terminar();
+        trabajos.terminar();
     }
 
     @Override
@@ -137,43 +143,13 @@ public class ModeloCascada implements Modelo {
     }
 
     @Override
-    public List<Vehiculo> getVehiculos(){
+    public List<Vehiculo> getVehiculos() {
         List<Vehiculo> coleccionVehiculos = new ArrayList<>();
-        for (Vehiculo vehiculo : vehiculos.get()){
+        for (Vehiculo vehiculo : vehiculos.get()) {
             coleccionVehiculos.add(vehiculo);
         }
 
         return coleccionVehiculos;
-    }
-
-    @Override
-    public List<Trabajo> getRevisiones(){
-        List<Trabajo> coleccionRevisiones = new ArrayList<>();
-        for (Trabajo trabajo : trabajos.get()){
-            coleccionRevisiones.add(Trabajo.copiar(trabajo));
-        }
-
-        return coleccionRevisiones;
-    }
-
-    @Override
-    public List<Trabajo> getRevisiones(Cliente cliente){
-        List<Trabajo> coleccionRevisiones = new ArrayList<>();
-        for (Trabajo trabajo : trabajos.get(cliente)){
-            coleccionRevisiones.add(Trabajo.copiar(trabajo));
-        }
-
-        return coleccionRevisiones;
-    }
-
-    @Override
-    public List<Trabajo> getRevisiones(Vehiculo vehiculo){
-        List<Trabajo> coleccionRevisiones = new ArrayList<>();
-        for (Trabajo trabajo : trabajos.get(vehiculo)){
-            coleccionRevisiones.add(Trabajo.copiar(trabajo));
-        }
-
-        return coleccionRevisiones;
     }
 
     @Override
@@ -208,31 +184,6 @@ public class ModeloCascada implements Modelo {
 
     @Override
     public Map<TipoTrabajo, Integer> getEstadisticasMensuales(LocalDate mes) {
-        int revisiones = 0;
-        int trabajosMecanicos = 0;
-        Map<TipoTrabajo,Integer> mapa = inicializarEstadisticas();
-
-        for (Trabajo trabajo : getTrabajos()){
-            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth()) && trabajo.getFechaInicio().getYear() == mes.getYear()){
-                if (trabajo instanceof Revision){
-                    revisiones += 1;
-                } else {
-                    trabajosMecanicos += 1;
-                }
-            }
-        }
-
-        mapa.put(TipoTrabajo.REVISION,revisiones);
-        mapa.put(TipoTrabajo.MECANICO,trabajosMecanicos);
-
-        return mapa;
-    }
-
-    private Map<TipoTrabajo,Integer> inicializarEstadisticas(){
-        Map<TipoTrabajo,Integer> mapa = new EnumMap<>(TipoTrabajo.class);
-        for (TipoTrabajo tipoTrabajo : TipoTrabajo.values()){
-            mapa.put(tipoTrabajo,0);
-        }
-        return mapa;
+        return trabajos.getEstadisticasMensuales(mes);
     }
 }

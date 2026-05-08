@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.fichero;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
@@ -19,7 +19,7 @@ public class Clientes implements IClientes {
     private static final String FICHERO_CLIENTES = String.format("%s%s%s", "datos", File.separator, "clientes.xml");
     private static final String RAIZ = "clientes";
     private static final String CLIENTE = "cliente";
-    private static final String NOMBRE = "nomrbre";
+    private static final String NOMBRE = "nombre";
     private static final String DNI = "dni";
     private static final String TELEFONO = "telefono";
 
@@ -97,13 +97,15 @@ public class Clientes implements IClientes {
     public void comenzar() {
         Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_CLIENTES);
         if (documentoXml != null) {
-            System.out.println("Fichero leúido correctamente.");
+            System.out.printf("Fichero %s leido correctamente.%n", FICHERO_CLIENTES);
             procesarDocumentoXml(documentoXml);
         }
     }
 
     @Override
     public void terminar() {
+        Document clientes = crearDocumentoXML();
+        UtilidadesXml.escribirDocumentoXml(clientes,FICHERO_CLIENTES);
 
     }
 
@@ -112,15 +114,16 @@ public class Clientes implements IClientes {
         Document documentoXml = null;
         if (constructor != null) {
             documentoXml = constructor.newDocument();
-            documentoXml.appendChild(documentoXml.createElement(CLIENTE));
+            documentoXml.appendChild(documentoXml.createElement(RAIZ));
             for (Cliente cliente : coleccionClientes) {
-                Element elementoPersona = crearElementoClienteConAtributos(documentoXml, cliente);
+                Element elementoPersona = getElemento(documentoXml, cliente);
                 documentoXml.getDocumentElement().appendChild(elementoPersona);
             }
         }
+        return documentoXml;
     }
 
-    private static Element crearElementoClienteConAtributos(Document documentoXML, Cliente cliente) {
+    private static Element getElemento(Document documentoXML, Cliente cliente) {
         Element elementoPersona = documentoXML.createElement(CLIENTE);
         elementoPersona.setAttribute(DNI, cliente.getDni());
         elementoPersona.setAttribute(NOMBRE, cliente.getNombre());
@@ -141,15 +144,14 @@ public class Clientes implements IClientes {
     }
 
     private Cliente getCliente(Element elemento){
+        Cliente cliente = null;
         if (elemento.getNodeType() == Node.ELEMENT_NODE) {
             String nombre = elemento.getAttribute(NOMBRE);
             String dni = (elemento.getAttribute(DNI));
             String telefono = (elemento.getAttribute(TELEFONO));
-            new Cliente(nombre,dni,telefono);
+            cliente = new Cliente(nombre,dni,telefono);
         }
+        return cliente;
     }
 
-    private Element getElemento(Document documentoXml,Cliente cliente){
-        return null;
-    }
 }
