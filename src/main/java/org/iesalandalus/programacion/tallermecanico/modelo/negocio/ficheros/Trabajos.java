@@ -247,7 +247,7 @@ public class Trabajos implements ITrabajos {
 
     private void procesarDocumentoXml(Document documentoXml){
         NodeList trabajos = documentoXml.getElementsByTagName(TRABAJO);
-        for (int i = 0; i < trabajos.getLength(); i++) {
+        for (int i = 0; i <= trabajos.getLength(); i++) {
             Node trabajo = trabajos.item(i);
             try{
                 insertar(getTrabajo((Element) trabajo));
@@ -264,17 +264,25 @@ public class Trabajos implements ITrabajos {
             LocalDate fechaInicio = LocalDate.parse((elemento.getAttribute(FECHA_INICIO)),FORMATO_FECHA);
             String tipo = elemento.getAttribute(TIPO);
             Vehiculo vehiculo = Vehiculos.getInstancia().buscar(Vehiculo.get((elemento.getAttribute(VEHICULO))));
+            if (tipo.equals(REVISION)){
+                trabajo = new Revision(cliente,vehiculo,fechaInicio);
+            } else if(tipo.equals(MECANICO)){
+                trabajo = new Mecanico(cliente,vehiculo,fechaInicio);
+                if(elemento.hasAttribute(PRECIO_MATERIAL)){
+                    float precioMaterial = Float.parseFloat((elemento.getAttribute(PRECIO_MATERIAL)));
+                    assert trabajo != null;
+                    ((Mecanico) trabajo).anadirPrecioMaterial(precioMaterial);
+                }
+            }
             if(elemento.hasAttribute(HORAS)){
                 int horas = Integer.parseInt((elemento.getAttribute(HORAS)));
-                trabajo = new Revision(cliente,vehiculo,fechaInicio);
+                assert trabajo != null;
                 trabajo.anadirHoras(horas);
-            } else if(tipo.equals(MECANICO)){
-                float precioMaterial = Float.parseFloat((elemento.getAttribute(PRECIO_MATERIAL)));
-                trabajo = new Mecanico(cliente,vehiculo,fechaInicio);
-                anadirPrecioMaterial(trabajo,precioMaterial);
             }
+
             if (elemento.hasAttribute(FECHA_FIN)) {
                 LocalDate fechaFin = LocalDate.parse((elemento.getAttribute(FECHA_FIN)),FORMATO_FECHA);
+                assert trabajo != null;
                 trabajo.cerrar(fechaFin);
             }
         }
