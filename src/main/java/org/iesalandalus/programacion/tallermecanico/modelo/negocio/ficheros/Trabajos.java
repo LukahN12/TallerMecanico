@@ -221,6 +221,10 @@ public class Trabajos implements ITrabajos {
             documentoXml.appendChild(documentoXml.createElement(RAIZ));
             for (Trabajo trabajo : coleccionTrabajos) {
                 Element elementoPersona = getElemento(documentoXml, trabajo);
+                elementoPersona.setAttribute(FECHA_INICIO, trabajo.getFechaInicio().format(FORMATO_FECHA));
+                if (trabajo.estaCerrado()){
+                    elementoPersona.setAttribute(FECHA_FIN,trabajo.getFechaFin().format(FORMATO_FECHA));
+                }
                 documentoXml.getDocumentElement().appendChild(elementoPersona);
             }
         }
@@ -270,7 +274,6 @@ public class Trabajos implements ITrabajos {
                 trabajo = new Mecanico(cliente,vehiculo,fechaInicio);
                 if(elemento.hasAttribute(PRECIO_MATERIAL)){
                     float precioMaterial = Float.parseFloat((elemento.getAttribute(PRECIO_MATERIAL)));
-                    assert trabajo != null;
                     ((Mecanico) trabajo).anadirPrecioMaterial(precioMaterial);
                 }
             }

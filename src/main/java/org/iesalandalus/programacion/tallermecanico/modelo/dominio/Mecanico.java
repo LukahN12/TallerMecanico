@@ -40,6 +40,6 @@ public class Mecanico extends Trabajo {
 
     @Override
     public String toString() {
-        return String.format((estaCerrado()) ? String.format("Mecánico -> %s - %s (%s - %s): %s horas,%5.2f € en material, %5.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(),getPrecioMaterial() ,getPrecio()) : String.format("Mecánico -> %s - %s (%s - ): %s horas,%5.2f € en material",  getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras(),getPrecio()));
+        return String.format((estaCerrado()) ? String.format("Mecánico -> %s - %s (%s - %s): %s horas,%5.2f € en material, %5.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(),getPrecioMaterial() ,getPrecio()) : String.format("Mecánico -> %s - %s (%s - ): %s horas,%5.2f € en material",  getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras(),getPrecioMaterial()));
     }
 }

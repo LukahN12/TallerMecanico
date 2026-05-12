@@ -39,7 +39,7 @@ public class Controlador implements IControlador {
                 case BUSCAR_CLIENTE -> { modelo.buscar(vista.leerCliente()); vista.notificarResultado(Evento.BUSCAR_CLIENTE, "Cliente buscado correctamente",true);}
                 case BUSCAR_VEHICULO -> { modelo.buscar(vista.leerVehiculo()); vista.notificarResultado(Evento.BUSCAR_VEHICULO, "Vehiculo buscado correctamente",true);}
                 case BUSCAR_TRABAJO -> { modelo.buscar(vista.leerTrabajoVehiculo()); vista.notificarResultado(Evento.BUSCAR_TRABAJO, "Trabajo buscado correctamente",true);}
-                case MODIFICAR_CLIENTE -> { modelo.modificar(vista.leerCliente(),vista.leerNuevoNombre(), vista.leerNuevoTelefono()); vista.notificarResultado(Evento.MODIFICAR_CLIENTE, "Cliente modificado correctamente",true);}
+                case MODIFICAR_CLIENTE -> { modelo.modificar(vista.leerClienteDni(),vista.leerNuevoNombre(), vista.leerNuevoTelefono()); vista.notificarResultado(Evento.MODIFICAR_CLIENTE, "Cliente modificado correctamente",true);}
                 case ANADIR_HORAS_TRABAJO -> { modelo.anadirHoras(vista.leerTrabajoVehiculo(),vista.leerHoras()); vista.notificarResultado(Evento.ANADIR_HORAS_TRABAJO, "Horas añadidas correctamente",true);}
                 case ANADIR_PRECIO_MATERIAL_TRABAJO -> { modelo.anadirPrecioMaterial(vista.leerTrabajoVehiculo(),vista.leerPrecioMaterial()); vista.notificarResultado(Evento.ANADIR_PRECIO_MATERIAL_TRABAJO, "Precio añadido correctamente",true);}
                 case CERRAR_TRABAJO -> { modelo.cerrar(vista.leerTrabajoVehiculo(),vista.leerFechaCierre()); vista.notificarResultado(Evento.CERRAR_TRABAJO, "Trabajo cerrado correctamente",true);}
@@ -52,7 +52,7 @@ public class Controlador implements IControlador {
                 case LISTAR_TRABAJO_CLIENTE -> { modelo.getTrabajos(vista.leerCliente()); vista.notificarResultado(Evento.LISTAR_TRABAJO_CLIENTE, "Trabajos de un cliente listados correctamente",true);}
                 case LISTAR_TRABAJO_VEHICULO -> { modelo.getTrabajos(vista.leerVehiculo()); vista.notificarResultado(Evento.LISTAR_TRABAJO_VEHICULO, "Trabajos de un vehiculo listados correctamente",true);}
                 case MOSTRAR_ESTADISTICAS_MENSUALES -> { modelo.getEstadisticasMensuales(vista.leerMes()); vista.notificarResultado(Evento.MOSTRAR_ESTADISTICAS_MENSUALES, "Estadisticas mensuales mostradas correctamente",true);}
-                case SALIR -> {}
+                case SALIR -> {modelo.terminar();vista.notificarResultado(Evento.SALIR,"Programa finalizado con existo",true);}
             }
         } catch (Exception e){
             vista.notificarResultado(evento, e.getMessage(), false);

@@ -106,6 +106,7 @@ public class Clientes implements IClientes {
     public void terminar() {
         Document clientes = crearDocumentoXML();
         UtilidadesXml.escribirDocumentoXml(clientes,FICHERO_CLIENTES);
+        System.out.println("Archivo clientes.xml creado correctamente ");
 
     }
 
